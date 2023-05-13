@@ -1,70 +1,23 @@
-// Constants for the literals
-const INVALID_ROMAN = "Please enter a valid roman";
-const INVALID_INTEGER = "Please enter a valid integer";
-const OUT_OF_RANGE = "Out of range (1-3999)";
-
 function init() { 
-  
-  // Load elements once to avoid repetition on every invocation
-  var modeCheckbox = document.querySelector("input[type='checkbox']");
-  var header = document.querySelector("h1");
-  var convertButton = document.querySelector(".convert-button");
-  var outputArea = document.querySelector(".convert-output");
-  var inputArea = document.querySelector("input[type='text']");
-
-
-  modeCheckbox.addEventListener("change", (e) => {
-    header.innerHTML = getModeTitle(e.target.checked);
+  document.querySelector("input[type='checkbox']").addEventListener("change", (e) => {
+    document.querySelector("h1").innerHTML = e.target.checked ? "Integer To Roman" : "Roman To Integer";
   });
 
-  const getModeTitle = (integerToRoman) => {
-    return integerToRoman ? "Integer To Roman" : "Roman To Integer";
-  };
-
-  // Now, the convertion operation does only perform the operation. 
-  // Things we have extracted to this listener: 
-  // 1 - Read the UI inputs (inputArea.value)
-  // 2 - Write the UI output (outputArea.innerHTML)
-  // 3 - Show error messages
-  // This is cleaner and also removes code duplications
-  convertButton.addEventListener("click", () => {
-    let inputValue = inputArea.value;
-    let convertion = modeCheckbox.checked ? convertIntegerToRoman(inputValue) : convertRomanToInteger(inputValue);
-    if (convertion.result) {
-      outputArea.innerHTML = convertion.value;
-    } else {
-      alert(convertion.message);
-    }
+  document.querySelector(".convert-button").addEventListener("click", () => {
+    document.querySelector("input[type='checkbox']").checked ? convertIntegerToRoman() : convertRomanToInteger();
   });
 
-};
-
-  // Now the convertion methods receive both an input argument instead
-  // of reading directly from the UI.
-  // On top of that, they return a JSON object instead of updating the
-  // UI directly. The JSON object contains the result (ok/nok), the value
-  // and an error message if needed
-  const convertRomanToInteger = (roman) => {
-
-    let response = {
-      value: 0, 
-      message: '',
-      result: false 
-    }
-
-    // Regexp to check if a string is a valid roman number
+  const convertRomanToInteger = () => {
     const romanNumeralRegex = new RegExp(
-      /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
+      /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
     );
 
-    // Convert the string to uppercase so we just to handle uppercase strings
-    roman = roman.toUpperCase();
+    roman = document.querySelector("input[type='text']").value;
     const regexResult = romanNumeralRegex.test(roman);
 
-    // Either the string is not a valid roman number or is empty
-    if (!regexResult || roman.length <= 0) {
-      response.message = INVALID_ROMAN;
-      return response;
+    if (!regexResult) {
+      alert("Please enter a valid roman numeral");
+      return false;
     }
 
     let arr = ["I", "V", "X", "L", "C", "D", "M"];
@@ -93,40 +46,23 @@ function init() {
       prevIndex = arr.indexOf(roman[i]);
     }
 
-    response.value = sum;
-    response.result = true;
-
-    return response;
+    document.querySelector(".convert-output").innerHTML = sum;
   };
 
-  // Now the convertion methods receive both an input argument instead
-  // of reading directly from the UI.
-  // On top of that, they return a JSON object instead of updating the
-  // UI directly. The JSON object contains the result (ok/nok), the value
-  // and an error message if needed
-  const convertIntegerToRoman = (num) => {
-
-    let response = {
-      value: 0,
-      message: '', 
-      result: false 
-    }
-
-    // Regexp to check the input is a valid integer
+  const convertIntegerToRoman = () => {
     const numberRegex = new RegExp(/^\d+$/);
 
+    let num = document.querySelector("input[type='text']").value;
     const regexResult = numberRegex.test(num);
 
-    // Not an integer -> we exit with the appropriate message
     if (!regexResult) {
-      response.message = INVALID_INTEGER;
-      return response;
+      alert("Please enter a valid integer");
+      return false;
     }
 
-    // Integer not in the supported range -> exit with the right message
-    if (Number(num) > 3999 || Number(num) < 1) {
-      response.message = OUT_OF_RANGE;
-      return response;   
+    if (Number(num) > 3999) {
+      alert("Out of range. Please enter a integer less than 4000.");
+      return false;
     }
 
     const mapping = {
@@ -153,11 +89,7 @@ function init() {
       count *= 10;
       num = parseInt(num / 10);
     }
-
-    response.value = str;
-    response.result = true;
-
-    return response;
+    document.querySelector(".convert-output").innerHTML = str;
   };
 
   const lessThan9 = (num, obj) => {
@@ -221,4 +153,4 @@ function init() {
       return obj[1000].repeat(parseInt(num / 1000));
     }
   };
-
+}
