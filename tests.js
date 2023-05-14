@@ -15,14 +15,14 @@ test("Not exist roman number", function (assert) {
 });
 
 test("Out of range", function (assert) {
- assert.propEqual(convertIntegerToRoman("4000"), {value: , message: 'Please enter a valid integer', result: false}, "TC-8");
+ assert.propEqual(convertIntegerToRoman("4000"), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-8");
 });
 
 test("Invalid symbols", function (assert) {
  assert.propEqual(convertIntegerToRoman("1.23"), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-9");
  assert.propEqual(convertIntegerToRoman("V"), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-10");
  assert.propEqual(convertRomanToInteger("123"), {value: 0, message: 'Please enter a valid roman', result: false}, "TC-11");
- assert.propEqual(convertIntegerToRoman("0"), {value: , message: 'Please enter a valid integer', result: false}, "TC-12");
+ assert.propEqual(convertIntegerToRoman("0"), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-12");
 });
 test("Empty", function (assert) {
  assert.propEqual(convertRomanToInteger(""), {value: 0, message: 'Please enter a valid roman', result: false}, "TC-13");
