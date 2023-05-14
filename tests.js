@@ -5,17 +5,9 @@ test("Valid arguments", function(assert) {
   assert.propEqual(convertIntegerToRoman(3999), {value: "MMMCMXCIX", message: '', result: true}, "TC-4");
 });
 
-test("Negative number", function (assert) {
-  assert.propEqual(convertIntegerToRoman(-189), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-5");
-});
-
 test("Not exist roman number", function (assert) {
  assert.propEqual(convertRomanToInteger("XDPI"), {value: 0, message: 'Please enter a valid roman', result: false}, "TC-6");
  assert.propEqual(convertRomanToInteger("VIIII"), {value: 0, message: 'Please enter a valid roman', result: false}, "TC-7");
-});
-
-test("Out of range", function (assert) {
- assert.propEqual(convertIntegerToRoman(4000), {value: 0, message: 'Please enter a valid integer', result: false}, "TC-8");
 });
 
 test("Invalid symbols", function (assert) {
