@@ -8,6 +8,14 @@
     gtag('js', new Date());
     gtag('config', 'G-K8H6X2471H');
   </script>
+  <script>
+    document.getElementById('convert-button').addEventListener('click', function() {
+      gtag('event', 'button_click', {
+        'event_category': 'Button',
+        'event_label': 'Convert Button'
+      });
+    });
+  </script>
     <script src="romans.js"></script>
     <link rel="stylesheet" href="romans.css">
   </head>
@@ -22,7 +30,7 @@
         <div class="group">
           <input type="text" name="conversion-input" />
         </div>
-        <span class="convert-button">Convert</span>
+        <span class="convert-button" id="convert-button">Convert</span>
         <p class="convert-output"></p>
       </section>
     </main>
