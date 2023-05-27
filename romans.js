@@ -35,6 +35,10 @@ function init() {
     } else {
       alert(convertion.message);
     }
+    // eslint-disable-next-line no-undef
+    gtag('event', 'convertButtonListener', {
+      'event_label': 'convertButton'
+    });
   });
 
 }
